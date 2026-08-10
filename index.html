@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="HSE Radar MVP — interactive multilingual demo">
+  <title>HSE Radar — MVP Demo</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <div class="notice" id="demo-notice"></div>
+  <section class="login" id="login-view">
+    <form id="login-form" class="login-card">
+      <div class="language"><button type="button" data-lang="kk">ҚАЗ</button><button type="button" data-lang="ru" class="active">РУС</button><button type="button" data-lang="en">ENG</button></div>
+      <div class="mark">HR</div>
+      <p class="eyebrow" data-i18n="eyebrow"></p>
+      <h1>HSE Radar</h1>
+      <p class="sub" data-i18n="login_intro"></p>
+      <label><span data-i18n="login"></span><input name="login" autocomplete="username" required></label>
+      <label><span data-i18n="password"></span><input name="password" type="password" autocomplete="current-password" required></label>
+      <p class="error" id="login-error"></p>
+      <button class="primary full" type="submit" data-i18n="sign_in"></button>
+      <p class="hint" data-i18n="demo_access"></p>
+    </form>
+  </section>
+
+  <div class="shell hidden" id="app-view">
+    <aside class="sidebar">
+      <div class="brand"><span class="mini-mark">HR</span><div><strong>HSE Radar</strong><small data-i18n="eyebrow"></small></div></div>
+      <nav>
+        <button data-page="overview" class="nav active"><span>◌</span><span data-i18n="overview"></span></button>
+        <button data-page="employees" class="nav"><span>◉</span><span data-i18n="employees"></span></button>
+        <button data-page="calendar" class="nav"><span>□</span><span data-i18n="calendar"></span></button>
+        <button data-page="inventory" class="nav"><span>◇</span><span data-i18n="inventory"></span></button>
+        <button data-page="ppe" class="nav"><span>⬡</span><span data-i18n="ppe"></span></button>
+        <button data-page="admin" class="nav" id="admin-nav"><span>⚙</span><span data-i18n="management"></span></button>
+      </nav>
+      <div class="sidebar-bottom"><span id="current-user"></span><button id="logout" data-i18n="logout"></button></div>
+    </aside>
+    <main>
+      <header><button class="menu" id="menu">☰</button><div><p class="eyebrow">HSE Radar · MVP</p><h2 id="page-title"></h2></div><div class="header-right"><select id="company-select"></select><div class="language compact"><button type="button" data-lang="kk">ҚАЗ</button><button type="button" data-lang="ru">РУС</button><button type="button" data-lang="en">ENG</button></div></div></header>
+
+      <section class="page active" id="page-overview">
+        <div class="hero"><div><p class="eyebrow" data-i18n="overview"></p><h1 data-i18n="hero"></h1><p data-i18n="hero_text"></p></div><div class="radar"></div></div>
+        <div class="stats" id="stats"></div>
+        <article class="card"><div class="section-title"><div><p class="eyebrow" data-i18n="attention"></p><h3 data-i18n="risks"></h3></div><button class="secondary" data-page="calendar" data-i18n="open_calendar"></button></div><div id="risk-list"></div></article>
+      </section>
+
+      <section class="page" id="page-employees"><div class="heading"><div><p class="eyebrow" data-i18n="registry"></p><h1 data-i18n="employees"></h1></div><button class="primary" id="new-employee" data-i18n="add_employee"></button></div><article class="card"><div id="employees-table"></div></article></section>
+      <section class="page" id="page-calendar"><div class="heading"><div><p class="eyebrow" data-i18n="risks_only"></p><h1 data-i18n="calendar"></h1></div></div><div class="filters"><label data-i18n="from"><input id="date-from" type="date"></label><label data-i18n="to"><input id="date-to" type="date"></label><label data-i18n="status"><select id="status-filter"><option value="" data-i18n="red_yellow"></option><option value="red" data-i18n="red"></option><option value="yellow" data-i18n="yellow"></option></select></label><label data-i18n="sorting"><select id="calendar-sort"><option value="date" data-i18n="nearest"></option><option value="risk" data-i18n="red_first"></option></select></label></div><article class="card"><div id="calendar-table"></div></article></section>
+      <section class="page" id="page-inventory"><div class="heading"><div><p class="eyebrow" data-i18n="equipment"></p><h1 data-i18n="inventory"></h1></div><button class="primary" id="new-inventory" data-i18n="add_inventory"></button></div><article class="card"><div id="inventory-table"></div></article></section>
+      <section class="page" id="page-ppe"><div class="heading"><div><p class="eyebrow" data-i18n="issue_and_replacement"></p><h1 data-i18n="ppe_full"></h1></div><button class="primary" id="new-ppe" data-i18n="add_ppe"></button></div><article class="card"><div id="ppe-table"></div></article></section>
+      <section class="page" id="page-admin"><div class="heading"><div><p class="eyebrow" data-i18n="developer_account"></p><h1 data-i18n="management"></h1></div><button class="primary" id="new-company" data-i18n="new_client"></button></div><div class="grid"><article class="card"><div class="section-title"><h3 data-i18n="companies"></h3></div><div id="companies-list"></div></article><article class="card"><div class="section-title"><h3 data-i18n="catalogs"></h3></div><p class="sub" data-i18n="catalog_note"></p><button class="secondary" id="catalog-editor" data-i18n="open_catalogs"></button></article></div></section>
+    </main>
+  </div>
+
+  <dialog id="dialog"><form id="form" method="dialog"><div class="dialog-top"><div><p class="eyebrow" id="dialog-eyebrow"></p><h2 id="dialog-title"></h2></div><button type="button" class="close" data-close>×</button></div><div id="form-fields" class="form-grid"></div><p class="error" id="dialog-error"></p><div class="dialog-actions"><button type="button" class="secondary" data-close data-i18n="cancel"></button><button class="primary" type="submit" data-i18n="save"></button></div></form></dialog>
+  <script src="demo.js"></script>
+</body>
+</html>
